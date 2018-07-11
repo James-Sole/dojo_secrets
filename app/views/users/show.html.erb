@@ -1,0 +1,26 @@
+<% content_for  :left_column do %>
+<div class="">
+  <a href="<%= logout_path %>" data-method="delete">Logout</a>
+  <a href="<%= secrets_path %>" >Secrets Home</a>
+  <a href="/users/<%= session[:user_id] %>/edit">Edit My info</a>
+</div>
+<h1>Hello <%= @user.name %></h1>
+<h2>Share a secret</h2>
+<%= render 'partials/errors' %>
+<form action="<%= secrets_path %>" method="post" >
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div class="form-group">
+    <label>Secret: </label>
+    <textarea class="form-control" id="exampleFormControlInput1" type="text" name="content" placeholder="Secret" rows="8" cols="80"></textarea>
+  </div>
+  <button class="btn btn-primary" type="submit">Create!</button>
+</form>
+
+<% @my_secrets.each do |secret| %>
+  <p><%= secret.content%></p>
+  <p><%= secret.likes.count %> likes</p>
+  <a href="<%= secret_path(secret.id) %>" data-method="delete"><button> Delete </button></a>
+<% end %>
+
+
+<% end %>
